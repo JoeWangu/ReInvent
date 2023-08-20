@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">ReInvent</string>
+    <string name="change_theme" translatable="false">Switch on dynamic theme</string>
+    <string name="loading" translatable="false">loading</string>
+    <string name="loading_failed" translatable="false">loading failed</string>
+    <string name="retry" translatable="false">retry</string>
+    <string name="p_image" translatable="false">product image</string>
+    <string name="refreshDb" translatable="false">refresh</string>
+</resources>
