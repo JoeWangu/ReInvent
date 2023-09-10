@@ -9,14 +9,14 @@ data class ProductEntity(
     @PrimaryKey(autoGenerate = false)
     val id: Int,
     @ColumnInfo(name = "product_name")
-    val productName: String?,
+    val productName: String,
     @ColumnInfo(name = "model_number")
-    val modelNumber: String?,
-    val specifications: String?,
-    val price: String?,
-    val image: Int?,
+    val modelNumber: String,
+    val specifications: String,
+    val price: String,
+    val image: Int,
     @ColumnInfo(name = "image_url")
-    val imageUrl: String?,
-    val category: Int?,
-    val supplier: Int?,
+    val imageUrl: String,
+    val category: Int,
+    val supplier: Int,
 )

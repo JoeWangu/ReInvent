@@ -24,12 +24,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -37,6 +39,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -72,13 +75,13 @@ object HomeDestination : NavigationDestination {
 fun HomeScreen(
 //    navigateBack: () -> Unit,
     onNavigateUp: () -> Unit,
+    navigateToItemEntry: () -> Unit,
     navigateToItemDetails: (Int) -> Unit,
     modifier: Modifier = Modifier,
     homeViewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val activity = LocalContext.current as? Activity
-    val context = LocalContext.current
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
@@ -89,18 +92,24 @@ fun HomeScreen(
                 scrollBehavior = scrollBehavior
             )
         },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = navigateToItemEntry,
+                shape = MaterialTheme.shapes.extraSmall,
+                modifier = Modifier
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = stringResource(id = R.string.product_entry_title)
+                )
+            }
+        }
     ) { innerPadding ->
         HomeBody(
-            homeUiState = homeViewModel.homeUiState,
-            retryAction = homeViewModel::getProducts,
-            refreshAction = homeViewModel::refreshDb,
+            homeUiState = homeViewModel.homeUiState.collectAsState().value,
+//            retryAction = homeViewModel::getProducts,
+//            refreshAction = homeViewModel::refreshDb,
             onLogOutClick = { activity?.finish() },
-            onSendClick = { summary: String ->
-                homeViewModel.shareProduct(
-                    context = context,
-                    summary = summary
-                )
-            },
             onProductClick = navigateToItemDetails,
             modifier = Modifier
                 .padding(innerPadding)
@@ -112,10 +121,9 @@ fun HomeScreen(
 @Composable
 fun HomeBody(
     homeUiState: HomeUiState,
-    retryAction: () -> Unit,
-    refreshAction: () -> Unit,
+//    retryAction: () -> Unit,
+//    refreshAction: () -> Unit,
     onLogOutClick: () -> Unit,
-    onSendClick: (String) -> Unit,
     onProductClick: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -124,13 +132,12 @@ fun HomeBody(
         is HomeUiState.Success -> ProductsBody(
             products = homeUiState.products,
             onProductClick = onProductClick,
-            refreshAction = refreshAction,
+//            refreshAction = refreshAction,
             onLogOutClick = onLogOutClick,
-            onSendClick = onSendClick,
             modifier = modifier
         )
 
-        is HomeUiState.Error -> ErrorScreen(retryAction, modifier = modifier.fillMaxSize())
+//        is HomeUiState.Error -> ErrorScreen(retryAction, modifier = modifier.fillMaxSize())
     }
 //    ProductsScreen(products = productsUiState., modifier.fillMaxSize())
 }
@@ -139,15 +146,10 @@ fun HomeBody(
 fun ProductsBody(
     products: List<ProductEntity?>,
     onProductClick: (Int) -> Unit,
-    refreshAction: () -> Unit,
+//    refreshAction: () -> Unit,
     onLogOutClick: () -> Unit,
-    onSendClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-//    Column(
-//        horizontalAlignment = Alignment.CenterHorizontally,
-//        modifier = modifier
-//    ) {
         if (products.isEmpty()) {
             Text(
                 text = stringResource(R.string.no_item_description),
@@ -158,26 +160,22 @@ fun ProductsBody(
             ProductsScreen(
                 products = products,
                 onProductClick = { onProductClick(it.id) },
-                refreshAction = refreshAction,
+//                refreshAction = refreshAction,
                 onLogOutClick = onLogOutClick,
-                onSendClick = onSendClick,
                 modifier = modifier
 //                    .fillMaxWidth()
             )
         }
-//    }
 }
 
 @Composable
 fun ProductsScreen(
     products: List<ProductEntity?>,
-    refreshAction: () -> Unit,
+//    refreshAction: () -> Unit,
     onLogOutClick: () -> Unit,
-    onSendClick: (String) -> Unit,
     onProductClick: (ProductEntity) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val summary = "${stringResource(R.string.app_name)}, ${ products[0]?.id }"
     Column(
         modifier = modifier.fillMaxSize()
     ) {
@@ -199,17 +197,12 @@ fun ProductsScreen(
                 .padding(dimensionResource(id = R.dimen.padding_small)),
             horizontalArrangement = Arrangement.End,
         ) {
-            Button(onClick = refreshAction) {
-                Text(text = stringResource(id = R.string.refreshDb))
-            }
+//            Button(onClick = refreshAction) {
+//                Text(text = stringResource(id = R.string.refreshDb))
+//            }
             Spacer(modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_small)))
             Button(onClick = onLogOutClick) {
                 Text(text = stringResource(id = R.string.logout))
-            }
-        }
-        Row {
-            Button(onClick = { onSendClick(summary) }) {
-                Text(text = stringResource(id = R.string.share))
             }
         }
     }
@@ -233,7 +226,7 @@ fun ProductCard(product: ProductEntity, modifier: Modifier = Modifier) {
                 .animateContentSize(
                     animationSpec = spring(
                         dampingRatio = Spring.DampingRatioLowBouncy,
-                        stiffness = Spring.StiffnessMedium
+                        stiffness = Spring.StiffnessMediumLow
                     )
                 )
                 .background(color = color)
@@ -282,12 +275,12 @@ fun ProductInfo(product: ProductEntity, modifier: Modifier = Modifier) {
         val productList = listOf(product)
         productList.forEach {
             Text(
-                text = "${it.productName}",
+                text = it.productName,
                 style = MaterialTheme.typography.displayMedium,
                 modifier = Modifier.padding(top = dimensionResource(id = R.dimen.padding_small))
             )
             Text(
-                text = "${it.modelNumber}",
+                text = it.modelNumber,
                 style = MaterialTheme.typography.bodyLarge
             )
         }
@@ -300,11 +293,11 @@ fun ExtraProductInfo(product: ProductEntity, modifier: Modifier = Modifier) {
         val productList = listOf(product)
         productList.forEach {
             Text(
-                text = "${it.specifications}",
+                text = it.specifications,
                 style = MaterialTheme.typography.bodyLarge
             )
             Text(
-                text = "${it.price}",
+                text = it.price,
                 style = MaterialTheme.typography.bodyLarge
             )
         }
@@ -329,22 +322,22 @@ fun ProductItemButton(
     }
 }
 
-@Composable
-fun ErrorScreen(retryAction: () -> Unit, modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.ic_connection_error), contentDescription = ""
-        )
-        Text(text = stringResource(R.string.loading_failed), modifier = Modifier.padding(16.dp))
-        Button(onClick = retryAction) {
-            Text(stringResource(R.string.retry))
-        }
-    }
-}
+//@Composable
+//fun ErrorScreen(retryAction: () -> Unit, modifier: Modifier = Modifier) {
+//    Column(
+//        modifier = modifier,
+//        verticalArrangement = Arrangement.Center,
+//        horizontalAlignment = Alignment.CenterHorizontally
+//    ) {
+//        Image(
+//            painter = painterResource(id = R.drawable.ic_connection_error), contentDescription = ""
+//        )
+//        Text(text = stringResource(R.string.loading_failed), modifier = Modifier.padding(16.dp))
+//        Button(onClick = retryAction) {
+//            Text(stringResource(R.string.retry))
+//        }
+//    }
+//}
 
 @Composable
 fun LoadingScreen(modifier: Modifier = Modifier) {

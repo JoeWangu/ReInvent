@@ -41,18 +41,7 @@ class ReInventRepository(
         // Return products from the database
         return appDatabase.reInventDao().getAllProducts()
     }
-    suspend fun refreshDatabase() {
-        try {
-            val response = appApi.getProducts()
-            val entities = response.results?.map { mapToEntity(it!!) }
-            entities.let { products ->
-                appDatabase.reInventDao().insertAll(products)
-            }
-        } catch (e: IOException) {
-            // Log the error
-            Log.e("AppRepository", "Error fetching data", e)
-        }
-    }
+
     override val daoRepositoryInt: DaoRepositoryInt by lazy {
         OfflineRepository(appDatabase.reInventDao())
     }

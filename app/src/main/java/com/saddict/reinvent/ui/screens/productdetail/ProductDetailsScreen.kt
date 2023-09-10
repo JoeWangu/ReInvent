@@ -5,9 +5,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -34,8 +38,7 @@ object ProductDetailsDestination : NavigationDestination {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductDetailsScreen(
-//    navigateToEditProduct:()->Unit,
-//    navigateBack: ()-> Unit,
+    navigateToEditProduct:(Int)->Unit,
     onNavigateUp: () -> Unit,
     modifier: Modifier = Modifier,
     productDetailsViewModel: ProductDetailsViewModel = viewModel(factory = AppViewModelProvider.Factory)
@@ -48,6 +51,18 @@ fun ProductDetailsScreen(
                 canNavigateBack = true,
                 navigateUp = onNavigateUp,
             )
+        },floatingActionButton = {
+            FloatingActionButton(
+                onClick = { navigateToEditProduct(uiState.value.productDetails.id) },
+                shape = MaterialTheme.shapes.extraSmall,
+                modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large))
+
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = stringResource(R.string.product_edit_title),
+                )
+            }
         }
     ) { innerPadding ->
         ProductDetailBody(
@@ -87,19 +102,19 @@ fun ProductDetailItems(
             )
             ProductDetailsRow(
                 labelResID = R.string.name,
-                productDetail = productEntity.productName.toString()
+                productDetail = productEntity.productName
             )
             ProductDetailsRow(
                 labelResID = R.string.model_number,
-                productDetail = productEntity.modelNumber.toString()
+                productDetail = productEntity.modelNumber
             )
             ProductDetailsRow(
                 labelResID = R.string.specifications,
-                productDetail = productEntity.specifications.toString()
+                productDetail = productEntity.specifications
             )
             ProductDetailsRow(
                 labelResID = R.string.price,
-                productDetail = productEntity.price.toString()
+                productDetail = productEntity.price
             )
             ProductDetailsRow(
                 labelResID = R.string.image,

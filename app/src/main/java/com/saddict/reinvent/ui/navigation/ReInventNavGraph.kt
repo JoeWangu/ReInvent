@@ -14,6 +14,10 @@ import com.saddict.reinvent.ui.screens.login.LoginDestination
 import com.saddict.reinvent.ui.screens.login.LoginScreen
 import com.saddict.reinvent.ui.screens.productdetail.ProductDetailsDestination
 import com.saddict.reinvent.ui.screens.productdetail.ProductDetailsScreen
+import com.saddict.reinvent.ui.screens.productdetail.ProductEditDestination
+import com.saddict.reinvent.ui.screens.productdetail.ProductEditScreen
+import com.saddict.reinvent.ui.screens.productdetail.ProductEntryDestination
+import com.saddict.reinvent.ui.screens.productdetail.ProductEntryScreen
 
 @Composable
 fun ReInventNavHost(
@@ -27,13 +31,15 @@ fun ReInventNavHost(
     ) {
         composable(route = LoginDestination.route) {
             LoginScreen(
-                onLoginBtnClicked = { navController.navigate(HomeDestination.route) }
+                navigateToHome = { navController.navigate(HomeDestination.route) }
             )
         }
         composable(route = HomeDestination.route) {
             HomeScreen(
                 onNavigateUp = { navController.navigateUp() },
-                navigateToItemDetails = { navController.navigate("${ProductDetailsDestination.route}/${it}") }
+                navigateToItemDetails = { navController.navigate("${ProductDetailsDestination.route}/${it}") },
+                navigateToItemEntry = { navController.navigate(ProductEntryDestination.route) }
+
             )
         }
         composable(
@@ -43,6 +49,24 @@ fun ReInventNavHost(
             })
         ){
             ProductDetailsScreen(
+                onNavigateUp = { navController.navigateUp() },
+                navigateToEditProduct = { navController.navigate("${ProductEditDestination.route}/${it}") }
+            )
+        }
+        composable(route = ProductEntryDestination.route){
+            ProductEntryScreen(
+                navigateBack = { navController.popBackStack() },
+                onNavigateUp = { navController.navigateUp() }
+            )
+        }
+        composable(
+            route = ProductEditDestination.routeWithArgs,
+            arguments = listOf(navArgument(ProductEditDestination.productIdArg){
+                type = NavType.IntType
+            })
+        ){
+            ProductEditScreen(
+                navigateBack = { navController.popBackStack() },
                 onNavigateUp = { navController.navigateUp() }
             )
         }
