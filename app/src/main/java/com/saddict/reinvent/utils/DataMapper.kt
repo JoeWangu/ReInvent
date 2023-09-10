@@ -13,7 +13,7 @@ class DataMapper {
                 specifications = productsResult.specifications,
                 price = productsResult.price,
                 image = productsResult.image,
-                imageDetail = productsResult.imageDetail?.image,
+                imageUrl = productsResult.imageDetail?.image,
                 category = productsResult.category,
                 supplier = productsResult.supplier
             )

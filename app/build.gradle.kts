@@ -82,6 +82,10 @@ dependencies {
     ksp("androidx.room:room-compiler:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
 
+    //    navigation
+    val navVersion = "2.7.0"
+    implementation("androidx.navigation:navigation-compose:$navVersion")
+
 //    Instrumentation Tests
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")

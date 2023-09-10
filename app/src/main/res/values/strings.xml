@@ -1,10 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">ReInvent</string>
-    <string name="change_theme" translatable="false">Switch on dynamic theme</string>
-    <string name="loading" translatable="false">loading</string>
-    <string name="loading_failed" translatable="false">loading failed</string>
-    <string name="retry" translatable="false">retry</string>
-    <string name="p_image" translatable="false">product image</string>
-    <string name="refreshDb" translatable="false">refresh</string>
+    <string name="change_theme">Switch on dynamic theme</string>
+    <string name="loading">loading</string>
+    <string name="loading_failed" >loading failed</string>
+    <string name="retry">retry</string>
+    <string name="p_image">product image</string>
+    <string name="refreshDb">refresh</string>
+    <string name="login">Login</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="registerTxt">Don\'t have an account: </string>
+    <string name="reg_here"> Register here</string>
+    <string name="logout">LogOut</string>
+    <string name="share">Share Product</string>
+    <string name="back_button">Return to the previous screen</string>
+    <string name="product_details">Product Details</string>
+    <string name="id">Product ID</string>
+    <string name="name">Product name</string>
+    <string name="model_number">Model Number</string>
+    <string name="specifications">Specifications</string>
+    <string name="price">Price</string>
+    <string name="image">Image</string>
+    <string name="image_detail">Image Detail</string>
+    <string name="category">Category</string>
+    <string name="supplier">Supplier</string>
+    <string name="no_item_description">No Products found, please refresh page</string>
+
 </resources>

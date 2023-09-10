@@ -19,7 +19,7 @@ data class Product(
 @Keep
 data class ProductResult(
     @JsonProperty("id")
-    val id: Int? = null,
+    val id: Int,
     @JsonProperty("name")
     val name: String? = null,
     @JsonProperty("model_number")
@@ -41,7 +41,7 @@ data class ProductResult(
 @Keep
 data class ImageDetail(
     @JsonProperty("id")
-    val id: Int? = null,
+    val id: Int,
     @JsonProperty("image")
     val image: String? = null
 )
