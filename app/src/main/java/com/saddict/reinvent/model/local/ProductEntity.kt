@@ -1,9 +1,11 @@
 package com.saddict.reinvent.model.local
 
+import androidx.annotation.Keep
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+@Keep
 @Entity(tableName = "products")
 data class ProductEntity(
     @PrimaryKey(autoGenerate = false)

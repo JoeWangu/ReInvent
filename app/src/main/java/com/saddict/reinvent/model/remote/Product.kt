@@ -46,6 +46,7 @@ data class ImageDetail(
     val image: String
 )
 
+@Keep
 data class ProductPostRequest(
     val productName: String,
     val modelNumber: String,

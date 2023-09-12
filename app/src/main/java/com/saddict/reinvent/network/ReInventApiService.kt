@@ -9,6 +9,7 @@ import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.PUT
@@ -17,10 +18,10 @@ import retrofit2.http.Query
 
 interface ReInventApiService {
     @GET("inventory/api/products/")
-    suspend fun getProducts(@Query("format")format: String): Product
+    suspend fun getProducts(@Query("format")format: String, @Header("Authorization") token: String): Product
 
     @GET("inventory/api/products/{id}/")
-    suspend fun getSingleProduct(@Path("id") id: Int) : Call<ProductResult>
+    suspend fun getSingleProduct(@Path("id") id: Int, @Header("Authorization") token: String) : Call<ProductResult>
 
     @Headers("Content-Type:application/json")
     @POST("login-api/")

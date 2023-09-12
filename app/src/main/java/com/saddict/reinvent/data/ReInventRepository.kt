@@ -23,19 +23,22 @@ class ReInventRepository(
     private val appDatabase: ReInventDatabase = ReInventDatabase.getDatabase(context)
 ): ReInventContainer {
     suspend fun fetchDataAndStore(): Flow<List<ProductEntity>> {
-        val productsInDb = appDatabase.reInventDao().getAllProducts().first()
-        if (productsInDb.isEmpty()) {
-            try {
-                val response = appApi.getProducts()
-                val entities = response.results?.map { it?.let { it1 -> mapToEntity(it1) } }
-                entities.let { products ->
-                    if (products != null) {
-                        appDatabase.reInventDao().insertAll(products)
+        val preferenceDataStore = PreferenceDataStore(context)
+        preferenceDataStore.preferenceFlow.collect { token ->
+            val productsInDb = appDatabase.reInventDao().getAllProducts().first()
+            if (productsInDb.isEmpty()) {
+                try {
+                    val response = appApi.getProducts(token)
+                    val entities = response.results?.map { it?.let { it1 -> mapToEntity(it1) } }
+                    entities.let { products ->
+                        if (products != null) {
+                            appDatabase.reInventDao().insertAll(products)
+                        }
                     }
+                } catch (e: IOException) {
+                    // Log the error
+                    Log.e("AppRepository", "Error fetching data", e)
                 }
-            } catch (e: IOException) {
-                // Log the error
-                Log.e("AppRepository", "Error fetching data", e)
             }
         }
         // Return products from the database

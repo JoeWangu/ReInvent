@@ -3,6 +3,7 @@ package com.saddict.reinvent.ui.screens.login
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.saddict.reinvent.data.PreferenceDataStore
 import com.saddict.reinvent.data.sources.remote.NetworkContainer
 import com.saddict.reinvent.model.remote.User
 import kotlinx.coroutines.Dispatchers
@@ -18,10 +19,11 @@ sealed interface LoginUiState {
     data object Loading : LoginUiState
 }
 
-class LoginViewModel : ViewModel() {
+class LoginViewModel(preferenceDataStore: PreferenceDataStore) : ViewModel() {
     private val _uiState = MutableSharedFlow<LoginUiState>()
     val uiState: SharedFlow<LoginUiState> = _uiState
     private val repository = NetworkContainer().networkRepository
+    private val userPreferenceFlow = preferenceDataStore
 
     fun login(username: String, password: String) {
         viewModelScope.launch {
@@ -31,6 +33,9 @@ class LoginViewModel : ViewModel() {
                     val user = User(password = password, username = username)
                     val login = repository.login(user)
                     if (login.isSuccessful) {
+                        val responseBody = login.body()
+                        val token = responseBody!!.token
+                        userPreferenceFlow.setToken(token)
                         _uiState.emit(LoginUiState.Success)
                     } else {
                         _uiState.emit(LoginUiState.Error)
