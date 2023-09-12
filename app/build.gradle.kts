@@ -34,9 +34,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_20
         targetCompatibility = JavaVersion.VERSION_20
     }
-//    kotlinOptions {
-//        jvmTarget = "20"
-//    }
     kotlin {
         jvmToolchain(20)
     }
@@ -54,12 +51,12 @@ android {
 }
 
 dependencies {
-    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
+    implementation(platform("androidx.compose:compose-bom:2023.09.00"))
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.9.10"))
 
-    implementation("androidx.core:core-ktx:1.10.1")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
     implementation("androidx.activity:activity-compose:1.7.2")
 
 //    UI
@@ -83,8 +80,12 @@ dependencies {
     implementation("androidx.room:room-ktx:$roomVersion")
 
     //    navigation
-    val navVersion = "2.7.1"
+    val navVersion = "2.7.2"
     implementation("androidx.navigation:navigation-compose:$navVersion")
+
+    //Preferences Datastore
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
 
 //    Instrumentation Tests
     testImplementation("junit:junit:4.13.2")
