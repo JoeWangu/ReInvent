@@ -13,13 +13,14 @@ import kotlinx.coroutines.flow.stateIn
 
 data class ProductDetails(
     val id: Int = 0,
-    val productName: String? = "",
-    val modelNumber: String? = "",
-    val specifications: String? = "",
-    val price: String? = "",
-    val image: String? = "",
-    val category: String? = "",
-    val supplier: String? = "",
+    val productName: String = "",
+    val modelNumber: String = "",
+    val specifications: String = "",
+    val price: String = "",
+    val image: Int = 0,
+    val imageUrl: String = "",
+    val category: String = "",
+    val supplier: String = "",
 )
 
 data class ProductDetailsUiState(
@@ -28,7 +29,7 @@ data class ProductDetailsUiState(
 
 class ProductDetailsViewModel(
     savedStateHandle: SavedStateHandle,
-    private val repository: DaoRepositoryInt
+    repository: DaoRepositoryInt
 ): ViewModel() {
     private val productId: Int = checkNotNull(savedStateHandle[ProductDetailsDestination.productIdArg])
     val uiState: StateFlow<ProductDetailsUiState> =
@@ -51,8 +52,8 @@ fun ProductEntity.toProductDetails(): ProductDetails = ProductDetails(
     productName = productName,
     modelNumber = modelNumber,
     specifications = specifications,
-    price = price.toString(),
-    image = image.toString(),
+    price = price,
+    imageUrl = imageUrl,
     category = category.toString(),
     supplier = supplier.toString()
 )
@@ -63,8 +64,8 @@ fun ProductDetails.toProductEntity(): ProductEntity = ProductEntity(
     modelNumber = modelNumber,
     specifications = specifications,
     price = price,
-    image = image?.toIntOrNull() ?: 0,
-    category = category?.toIntOrNull() ?: 0,
-    supplier = supplier?.toIntOrNull() ?: 0,
-    imageUrl = image
+    image = image,
+    category = category.toIntOrNull() ?: 0,
+    supplier = supplier.toIntOrNull() ?: 0,
+    imageUrl = imageUrl
 )

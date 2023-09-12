@@ -8,7 +8,10 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.saddict.reinvent.ReInventApplication
 import com.saddict.reinvent.ui.screens.home.HomeViewModel
+import com.saddict.reinvent.ui.screens.login.LoginViewModel
 import com.saddict.reinvent.ui.screens.productdetail.ProductDetailsViewModel
+import com.saddict.reinvent.ui.screens.productdetail.ProductEditViewModel
+import com.saddict.reinvent.ui.screens.productdetail.ProductEntryViewModel
 
 object AppViewModelProvider {
     val Factory = viewModelFactory {
@@ -24,6 +27,18 @@ object AppViewModelProvider {
                 this.createSavedStateHandle(),
                 reInventApplication().container.daoRepositoryInt
             )
+        }
+        initializer {
+            ProductEntryViewModel()
+        }
+        initializer {
+            ProductEditViewModel(
+                this.createSavedStateHandle(),
+                reInventApplication().container.daoRepositoryInt
+            )
+        }
+        initializer {
+            LoginViewModel()
         }
     }
 }

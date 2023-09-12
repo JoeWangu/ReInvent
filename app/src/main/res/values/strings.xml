@@ -26,5 +26,16 @@
     <string name="category">Category</string>
     <string name="supplier">Supplier</string>
     <string name="no_item_description">No Products found, please refresh page</string>
+    <string name="product_entry_title">Add Product</string>
+    <string name="required_fields">*required fields</string>
+    <string name="product_name_req">Product Name*</string>
+    <string name="product_model_no_req">Product Model No*</string>
+    <string name="product_specifications_req">Product Specifications*</string>
+    <string name="product_price_req">Product Price*</string>
+    <string name="product_image_req">Product Image*</string>
+    <string name="product_category_req">Product Category*</string>
+    <string name="product_supplier_req">Product Supplier*</string>
+    <string name="save_action">Save</string>
+    <string name="product_edit_title">Update Product</string>
 
 </resources>
