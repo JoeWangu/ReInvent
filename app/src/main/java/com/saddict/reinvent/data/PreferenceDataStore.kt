@@ -7,24 +7,27 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.saddict.reinvent.model.manager.LocalUserManagerInt
+import com.saddict.reinvent.utils.Constants.TOKEN
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 
-private const val TOKEN = "user_token"
+//private const val TOKEN = "user_token"
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
     name = TOKEN
 )
-class PreferenceDataStore(context: Context) {
+class PreferenceDataStore(context: Context)
+    : LocalUserManagerInt {
     private val pref = context.dataStore
 
     private object PreferencesKeys {
         val TOKEN_KEY = stringPreferencesKey("token_key")
     }
 
-    val preferenceFlow: Flow<String> = pref.data
+    override val preferenceFlow: Flow<String> = pref.data
         .catch {
             if (it is IOException) {
                 it.printStackTrace()
@@ -37,7 +40,7 @@ class PreferenceDataStore(context: Context) {
             preferences[PreferencesKeys.TOKEN_KEY] ?: ""
         }
 
-    suspend fun setToken(token: String){
+    override suspend fun setToken(token: String){
         pref.edit { preferences ->
             preferences[PreferencesKeys.TOKEN_KEY] = token
         }

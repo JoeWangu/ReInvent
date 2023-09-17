@@ -1,13 +1,17 @@
 package com.saddict.reinvent.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.saddict.reinvent.data.PreferenceDataStore
 import com.saddict.reinvent.ui.screens.home.HomeDestination
 import com.saddict.reinvent.ui.screens.home.HomeScreen
 import com.saddict.reinvent.ui.screens.login.LoginDestination
@@ -24,9 +28,12 @@ fun ReInventNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController()
 ) {
+    val ctx = LocalContext.current
+    val preference = PreferenceDataStore(ctx)
+    val token by preference.preferenceFlow.collectAsState(initial = "")
     NavHost(
         navController = navController,
-        startDestination = LoginDestination.route,
+        startDestination = if (token == "") LoginDestination.route else HomeDestination.route,
         modifier = modifier
     ) {
         composable(route = LoginDestination.route) {

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.saddict.reinvent.data.PreferenceDataStore
 import com.saddict.reinvent.data.sources.remote.NetworkContainer
+import com.saddict.reinvent.model.manager.LocalUserManagerInt
 import com.saddict.reinvent.model.remote.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -19,7 +20,7 @@ sealed interface LoginUiState {
     data object Loading : LoginUiState
 }
 
-class LoginViewModel(preferenceDataStore: PreferenceDataStore) : ViewModel() {
+class LoginViewModel(preferenceDataStore: LocalUserManagerInt) : ViewModel() {
     private val _uiState = MutableSharedFlow<LoginUiState>()
     val uiState: SharedFlow<LoginUiState> = _uiState
     private val repository = NetworkContainer().networkRepository

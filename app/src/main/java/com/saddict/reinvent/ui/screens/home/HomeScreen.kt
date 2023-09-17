@@ -43,6 +43,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -60,10 +61,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.saddict.reinvent.R
+import com.saddict.reinvent.data.PreferenceDataStore
 import com.saddict.reinvent.model.local.ProductEntity
 import com.saddict.reinvent.ui.TopBar
 import com.saddict.reinvent.ui.navigation.NavigationDestination
 import com.saddict.reinvent.ui.screens.AppViewModelProvider
+import com.saddict.reinvent.utils.toastUtil
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 object HomeDestination : NavigationDestination {
     override val route = "home"
@@ -82,6 +87,9 @@ fun HomeScreen(
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val activity = LocalContext.current as? Activity
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+    val preferenceDataStore = PreferenceDataStore(context)
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
@@ -109,7 +117,14 @@ fun HomeScreen(
             homeUiState = homeViewModel.homeUiState.collectAsState().value,
 //            retryAction = homeViewModel::getProducts,
 //            refreshAction = homeViewModel::refreshDb,
-            onLogOutClick = { activity?.finish() },
+            onLogOutClick = {
+                coroutineScope.launch {
+                    preferenceDataStore.setToken("")
+                    context.toastUtil("You have been logged out")
+                    delay(5_000L)
+                    activity?.finish()
+                }
+            },
             onProductClick = navigateToItemDetails,
             modifier = Modifier
                 .padding(innerPadding)
