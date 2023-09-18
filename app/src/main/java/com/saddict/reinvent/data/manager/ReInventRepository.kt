@@ -1,4 +1,4 @@
-package com.saddict.reinvent.data
+package com.saddict.reinvent.data.manager
 
 import android.content.Context
 import android.util.Log
@@ -19,16 +19,16 @@ interface ReInventContainer{
 
 class ReInventRepository(
     private val context: Context,
-    private val appApi: NetworkRepositoryInt = NetworkContainer().networkRepository,
+    private val appApi: NetworkRepositoryInt = NetworkContainer(context).networkRepository,
     private val appDatabase: ReInventDatabase = ReInventDatabase.getDatabase(context)
 ): ReInventContainer {
     suspend fun fetchDataAndStore(): Flow<List<ProductEntity>> {
-        val preferenceDataStore = PreferenceDataStore(context)
-        preferenceDataStore.preferenceFlow.collect { token ->
+//        val preferenceDataStore = PreferenceDataStore(context)
+//        preferenceDataStore.preferenceFlow.collect { token ->
             val productsInDb = appDatabase.reInventDao().getAllProducts().first()
             if (productsInDb.isEmpty()) {
                 try {
-                    val response = appApi.getProducts(token)
+                    val response = appApi.getProducts()
                     val entities = response.results?.map { it?.let { it1 -> mapToEntity(it1) } }
                     entities.let { products ->
                         if (products != null) {
@@ -40,7 +40,7 @@ class ReInventRepository(
                     Log.e("AppRepository", "Error fetching data", e)
                 }
             }
-        }
+//        }
         // Return products from the database
         return appDatabase.reInventDao().getAllProducts()
     }

@@ -1,5 +1,6 @@
 package com.saddict.reinvent.ui.screens.productdetail
 
+import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -14,10 +15,11 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class ProductEditViewModel(
+    context: Context,
     savedStateHandle: SavedStateHandle,
     private val repository: DaoRepositoryInt
 ) : ViewModel() {
-    private val apiRepo = NetworkContainer().networkRepository
+    private val apiRepo = NetworkContainer(context).networkRepository
     var productEditUiState by mutableStateOf(ProductEntryUiState())
         private set
     private val productId: Int = checkNotNull(savedStateHandle[ProductEditDestination.productIdArg])

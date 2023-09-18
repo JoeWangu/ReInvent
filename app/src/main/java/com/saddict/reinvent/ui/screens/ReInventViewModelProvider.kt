@@ -7,7 +7,6 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.saddict.reinvent.ReInventApplication
-import com.saddict.reinvent.data.PreferenceDataStore
 import com.saddict.reinvent.ui.screens.home.HomeViewModel
 import com.saddict.reinvent.ui.screens.login.LoginViewModel
 import com.saddict.reinvent.ui.screens.productdetail.ProductDetailsViewModel
@@ -30,17 +29,21 @@ object AppViewModelProvider {
             )
         }
         initializer {
-            ProductEntryViewModel()
+            ProductEntryViewModel(
+                context = reInventApplication().applicationContext
+            )
         }
         initializer {
             ProductEditViewModel(
+                context = reInventApplication().applicationContext,
                 this.createSavedStateHandle(),
                 reInventApplication().container.daoRepositoryInt
             )
         }
         initializer {
             LoginViewModel(
-                preferenceDataStore = PreferenceDataStore(reInventApplication().applicationContext)
+                context = reInventApplication().applicationContext
+
             )
         }
     }

@@ -61,7 +61,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.saddict.reinvent.R
-import com.saddict.reinvent.data.PreferenceDataStore
+import com.saddict.reinvent.data.manager.PreferenceDataStore
 import com.saddict.reinvent.model.local.ProductEntity
 import com.saddict.reinvent.ui.TopBar
 import com.saddict.reinvent.ui.navigation.NavigationDestination
@@ -78,8 +78,6 @@ object HomeDestination : NavigationDestination {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-//    navigateBack: () -> Unit,
-    onNavigateUp: () -> Unit,
     navigateToItemEntry: () -> Unit,
     navigateToItemDetails: (Int) -> Unit,
     modifier: Modifier = Modifier,
@@ -95,8 +93,7 @@ fun HomeScreen(
         topBar = {
             TopBar(
                 title = stringResource(HomeDestination.titleRes),
-                canNavigateBack = true,
-                navigateUp = onNavigateUp,
+                canNavigateBack = false,
                 scrollBehavior = scrollBehavior
             )
         },
@@ -121,14 +118,13 @@ fun HomeScreen(
                 coroutineScope.launch {
                     preferenceDataStore.setToken("")
                     context.toastUtil("You have been logged out")
-                    delay(5_000L)
+                    delay(2_000L)
                     activity?.finish()
                 }
             },
             onProductClick = navigateToItemDetails,
             modifier = Modifier
                 .padding(innerPadding)
-//                .fillMaxSize()
         )
     }
 }
@@ -178,7 +174,6 @@ fun ProductsBody(
 //                refreshAction = refreshAction,
                 onLogOutClick = onLogOutClick,
                 modifier = modifier
-//                    .fillMaxWidth()
             )
         }
 }
@@ -336,23 +331,6 @@ fun ProductItemButton(
         )
     }
 }
-
-//@Composable
-//fun ErrorScreen(retryAction: () -> Unit, modifier: Modifier = Modifier) {
-//    Column(
-//        modifier = modifier,
-//        verticalArrangement = Arrangement.Center,
-//        horizontalAlignment = Alignment.CenterHorizontally
-//    ) {
-//        Image(
-//            painter = painterResource(id = R.drawable.ic_connection_error), contentDescription = ""
-//        )
-//        Text(text = stringResource(R.string.loading_failed), modifier = Modifier.padding(16.dp))
-//        Button(onClick = retryAction) {
-//            Text(stringResource(R.string.retry))
-//        }
-//    }
-//}
 
 @Composable
 fun LoadingScreen(modifier: Modifier = Modifier) {

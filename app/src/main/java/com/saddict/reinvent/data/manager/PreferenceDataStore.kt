@@ -1,4 +1,4 @@
-package com.saddict.reinvent.data
+package com.saddict.reinvent.data.manager
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -8,20 +8,20 @@ import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.saddict.reinvent.model.manager.LocalUserManagerInt
-import com.saddict.reinvent.utils.Constants.TOKEN
+import com.saddict.reinvent.utils.Constants
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
 import java.io.IOException
 
-//private const val TOKEN = "user_token"
-
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
-    name = TOKEN
+private val Context.tokenDataStore: DataStore<Preferences> by preferencesDataStore(
+    name = Constants.TOKEN
 )
 class PreferenceDataStore(context: Context)
     : LocalUserManagerInt {
-    private val pref = context.dataStore
+    private val pref = context.tokenDataStore
 
     private object PreferencesKeys {
         val TOKEN_KEY = stringPreferencesKey("token_key")
@@ -40,9 +40,17 @@ class PreferenceDataStore(context: Context)
             preferences[PreferencesKeys.TOKEN_KEY] ?: ""
         }
 
-    override suspend fun setToken(token: String){
+    fun getToken(): String {
+        var token: String
+        runBlocking {
+            token = preferenceFlow.first()
+        }
+        return token
+    }
+
+    override suspend fun setToken(token: String?){
         pref.edit { preferences ->
-            preferences[PreferencesKeys.TOKEN_KEY] = token
+            preferences[PreferencesKeys.TOKEN_KEY] = token ?: ""
         }
     }
 }

@@ -1,8 +1,7 @@
 package com.saddict.reinvent.ui.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
@@ -11,7 +10,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.saddict.reinvent.data.PreferenceDataStore
+import com.saddict.reinvent.data.manager.PreferenceDataStore
+import com.saddict.reinvent.ui.screens.extra.LoadingDestination
+import com.saddict.reinvent.ui.screens.extra.ScreenLoading
 import com.saddict.reinvent.ui.screens.home.HomeDestination
 import com.saddict.reinvent.ui.screens.home.HomeScreen
 import com.saddict.reinvent.ui.screens.login.LoginDestination
@@ -22,6 +23,7 @@ import com.saddict.reinvent.ui.screens.productdetail.ProductEditDestination
 import com.saddict.reinvent.ui.screens.productdetail.ProductEditScreen
 import com.saddict.reinvent.ui.screens.productdetail.ProductEntryDestination
 import com.saddict.reinvent.ui.screens.productdetail.ProductEntryScreen
+import kotlinx.coroutines.flow.first
 
 @Composable
 fun ReInventNavHost(
@@ -30,12 +32,27 @@ fun ReInventNavHost(
 ) {
     val ctx = LocalContext.current
     val preference = PreferenceDataStore(ctx)
-    val token by preference.preferenceFlow.collectAsState(initial = "")
+    LaunchedEffect(key1 = Unit) {
+        val token = preference.preferenceFlow.first()
+        if (token.isNotBlank()) {
+            navController.navigate(HomeDestination.route) {
+                popUpTo(LoadingDestination.route) { inclusive = true }
+            }
+        } else {
+            navController.navigate(LoginDestination.route) {
+                popUpTo(LoadingDestination.route) { inclusive = true }
+            }
+        }
+    }
+    val tokenLot = preference.getToken()
     NavHost(
         navController = navController,
-        startDestination = if (token == "") LoginDestination.route else HomeDestination.route,
+        startDestination = if (tokenLot == "") LoginDestination.route else HomeDestination.route,
         modifier = modifier
     ) {
+        composable(route = LoadingDestination.route) {
+            ScreenLoading()
+        }
         composable(route = LoginDestination.route) {
             LoginScreen(
                 navigateToHome = { navController.navigate(HomeDestination.route) }
@@ -43,7 +60,6 @@ fun ReInventNavHost(
         }
         composable(route = HomeDestination.route) {
             HomeScreen(
-                onNavigateUp = { navController.navigateUp() },
                 navigateToItemDetails = { navController.navigate("${ProductDetailsDestination.route}/${it}") },
                 navigateToItemEntry = { navController.navigate(ProductEntryDestination.route) }
 

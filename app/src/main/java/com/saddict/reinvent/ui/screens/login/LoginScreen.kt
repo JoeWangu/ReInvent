@@ -51,6 +51,7 @@ import com.saddict.reinvent.ui.navigation.NavigationDestination
 import com.saddict.reinvent.ui.screens.AppViewModelProvider
 import com.saddict.reinvent.ui.screens.home.HomeDestination
 import com.saddict.reinvent.utils.toastUtil
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 object LoginDestination : NavigationDestination {
@@ -169,6 +170,7 @@ fun LoginInput(
                                 LoginUiState.Loading -> ctx.toastUtil("Waiting for response")
                                 is LoginUiState.Success -> {
                                     ctx.toastUtil("Login Success")
+                                    delay(2_000L)
                                     navigateToHome()
                                 }
                             }

@@ -3,7 +3,7 @@ package com.saddict.reinvent.ui.screens.home
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.saddict.reinvent.data.ReInventRepository
+import com.saddict.reinvent.data.manager.ReInventRepository
 import com.saddict.reinvent.data.sources.DaoRepositoryInt
 import com.saddict.reinvent.model.local.ProductEntity
 import kotlinx.coroutines.Dispatchers
@@ -40,6 +40,6 @@ class HomeViewModel(repository: DaoRepositoryInt, context: Context)
     }.stateIn(
         scope = viewModelScope,
         initialValue = HomeUiState.Loading,
-        started = SharingStarted.WhileSubscribed(5_000)
+        started = SharingStarted.WhileSubscribed(5_000L)
     )
 }

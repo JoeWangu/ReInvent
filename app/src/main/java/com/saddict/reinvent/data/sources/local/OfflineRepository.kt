@@ -1,6 +1,6 @@
 package com.saddict.reinvent.data.sources.local
 
-import com.saddict.reinvent.data.ReInventDao
+import com.saddict.reinvent.data.manager.ReInventDao
 import com.saddict.reinvent.data.sources.DaoRepositoryInt
 import com.saddict.reinvent.model.local.ProductEntity
 import kotlinx.coroutines.flow.Flow

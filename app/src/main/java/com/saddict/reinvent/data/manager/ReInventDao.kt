@@ -1,4 +1,4 @@
-package com.saddict.reinvent.data
+package com.saddict.reinvent.data.manager
 
 import androidx.room.Dao
 import androidx.room.Insert

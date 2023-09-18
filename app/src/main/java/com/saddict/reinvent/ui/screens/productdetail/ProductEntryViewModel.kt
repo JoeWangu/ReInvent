@@ -1,5 +1,6 @@
 package com.saddict.reinvent.ui.screens.productdetail
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -8,8 +9,8 @@ import androidx.lifecycle.ViewModel
 import com.saddict.reinvent.data.sources.remote.NetworkContainer
 import com.saddict.reinvent.model.remote.ProductPostRequest
 
-class ProductEntryViewModel: ViewModel() {
-    private val apiRepo = NetworkContainer().networkRepository
+class ProductEntryViewModel(context: Context): ViewModel() {
+    private val apiRepo = NetworkContainer(context).networkRepository
     var productEntryUiState by mutableStateOf(ProductEntryUiState())
         private set
 

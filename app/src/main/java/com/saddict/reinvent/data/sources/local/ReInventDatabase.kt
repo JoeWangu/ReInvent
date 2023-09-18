@@ -4,11 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.saddict.reinvent.data.ReInventDao
+import com.saddict.reinvent.data.manager.ReInventDao
 import com.saddict.reinvent.model.local.ProductEntity
 
 @Database(entities = [ ProductEntity::class ], version = 1, exportSchema = false)
-//@TypeConverters(Converters::class)
 abstract class ReInventDatabase: RoomDatabase() {
     abstract fun reInventDao(): ReInventDao
     companion object{
