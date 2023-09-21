@@ -1,4 +1,4 @@
-package com.saddict.reinvent.ui.screens.login
+package com.saddict.reinvent.ui.screens.registration
 
 import android.content.Context
 import android.util.Log

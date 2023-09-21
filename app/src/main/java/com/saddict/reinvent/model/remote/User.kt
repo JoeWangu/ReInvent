@@ -18,3 +18,26 @@ data class UserResponse(
     @JsonProperty("created")
     val created: Boolean
 )
+
+@Keep
+data class RegisterUser(
+    val username: String,
+    val email: String,
+    val password: String
+)
+
+@Keep
+data class RegisterUserResponse(
+    @JsonProperty("user")
+    val user: UserRegisterResponse,
+    @JsonProperty("token")
+    val token: String,
+)
+
+@Keep
+data class UserRegisterResponse(
+    @JsonProperty("email")
+    val email: String,
+    @JsonProperty("username")
+    val username: String
+)

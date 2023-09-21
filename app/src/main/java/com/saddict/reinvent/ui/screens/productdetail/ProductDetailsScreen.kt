@@ -39,7 +39,7 @@ object ProductDetailsDestination : NavigationDestination {
 @Composable
 fun ProductDetailsScreen(
     navigateToEditProduct:(Int)->Unit,
-    onNavigateUp: () -> Unit,
+    navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
     productDetailsViewModel: ProductDetailsViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
@@ -49,7 +49,7 @@ fun ProductDetailsScreen(
             TopBar(
                 title = stringResource(ProductDetailsDestination.titleRes),
                 canNavigateBack = true,
-                navigateUp = onNavigateUp,
+                navigateUp = navigateBack,
             )
         },floatingActionButton = {
             FloatingActionButton(

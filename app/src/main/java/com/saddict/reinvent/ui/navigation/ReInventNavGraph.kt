@@ -1,5 +1,7 @@
 package com.saddict.reinvent.ui.navigation
 
+import android.app.Activity
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
@@ -15,14 +17,17 @@ import com.saddict.reinvent.ui.screens.extra.LoadingDestination
 import com.saddict.reinvent.ui.screens.extra.ScreenLoading
 import com.saddict.reinvent.ui.screens.home.HomeDestination
 import com.saddict.reinvent.ui.screens.home.HomeScreen
-import com.saddict.reinvent.ui.screens.login.LoginDestination
-import com.saddict.reinvent.ui.screens.login.LoginScreen
+import com.saddict.reinvent.ui.screens.registration.LoginDestination
+import com.saddict.reinvent.ui.screens.registration.LoginScreen
 import com.saddict.reinvent.ui.screens.productdetail.ProductDetailsDestination
 import com.saddict.reinvent.ui.screens.productdetail.ProductDetailsScreen
 import com.saddict.reinvent.ui.screens.productdetail.ProductEditDestination
 import com.saddict.reinvent.ui.screens.productdetail.ProductEditScreen
 import com.saddict.reinvent.ui.screens.productdetail.ProductEntryDestination
 import com.saddict.reinvent.ui.screens.productdetail.ProductEntryScreen
+import com.saddict.reinvent.ui.screens.registration.RegisterDestination
+import com.saddict.reinvent.ui.screens.registration.RegisterScreen
+import com.saddict.reinvent.utils.toastUtil
 import kotlinx.coroutines.flow.first
 
 @Composable
@@ -30,8 +35,10 @@ fun ReInventNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController()
 ) {
+    var pressedTime: Long = 0
     val ctx = LocalContext.current
     val preference = PreferenceDataStore(ctx)
+    val activity = LocalContext.current as? Activity
     LaunchedEffect(key1 = Unit) {
         val token = preference.preferenceFlow.first()
         if (token.isNotBlank()) {
@@ -54,15 +61,32 @@ fun ReInventNavHost(
             ScreenLoading()
         }
         composable(route = LoginDestination.route) {
+            BackHandler {
+                if (pressedTime + 2000 > System.currentTimeMillis()) {
+                    activity?.finish()
+                } else {
+                    ctx.toastUtil("Press back again to exit")
+                }
+                pressedTime = System.currentTimeMillis()
+            }
             LoginScreen(
-                navigateToHome = { navController.navigate(HomeDestination.route) }
+                navigateToHome = { navController.navigate(HomeDestination.route) },
+                navigateToRegister = { navController.navigate(RegisterDestination.route) }
             )
         }
         composable(route = HomeDestination.route) {
+            BackHandler {
+                if (pressedTime + 2000 > System.currentTimeMillis()) {
+                    activity?.finish()
+                } else {
+                    ctx.toastUtil("Press back again to exit")
+                }
+                pressedTime = System.currentTimeMillis()
+            }
             HomeScreen(
                 navigateToItemDetails = { navController.navigate("${ProductDetailsDestination.route}/${it}") },
-                navigateToItemEntry = { navController.navigate(ProductEntryDestination.route) }
-
+                navigateToItemEntry = { navController.navigate(ProductEntryDestination.route) },
+                navigateToLogin = { navController.navigate(LoginDestination.route) }
             )
         }
         composable(
@@ -72,14 +96,13 @@ fun ReInventNavHost(
             })
         ){
             ProductDetailsScreen(
-                onNavigateUp = { navController.navigateUp() },
+                navigateBack = { navController.navigateUp() },
                 navigateToEditProduct = { navController.navigate("${ProductEditDestination.route}/${it}") }
             )
         }
         composable(route = ProductEntryDestination.route){
             ProductEntryScreen(
                 navigateBack = { navController.popBackStack() },
-                onNavigateUp = { navController.navigateUp() }
             )
         }
         composable(
@@ -89,8 +112,13 @@ fun ReInventNavHost(
             })
         ){
             ProductEditScreen(
-                navigateBack = { navController.popBackStack() },
-                onNavigateUp = { navController.navigateUp() }
+                navigateBack = { navController.popBackStack() }
+            )
+        }
+        composable(route = RegisterDestination.route) {
+            RegisterScreen(
+                navigateToHome = { navController.navigate(HomeDestination.route) },
+                navigateBack = { navController.popBackStack() }
             )
         }
     }

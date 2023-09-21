@@ -4,6 +4,8 @@ import com.saddict.reinvent.model.local.ProductEntity
 import com.saddict.reinvent.model.remote.Product
 import com.saddict.reinvent.model.remote.ProductPostRequest
 import com.saddict.reinvent.model.remote.ProductResult
+import com.saddict.reinvent.model.remote.RegisterUser
+import com.saddict.reinvent.model.remote.RegisterUserResponse
 import com.saddict.reinvent.model.remote.User
 import com.saddict.reinvent.model.remote.UserResponse
 import kotlinx.coroutines.flow.Flow
@@ -16,6 +18,7 @@ interface NetworkRepositoryInt {
     suspend fun postProducts(products: ProductPostRequest): Response<ProductResult>
     suspend fun updateProduct(id: Int, product: ProductPostRequest): Response<ProductResult>
     suspend fun login(user: User): Response<UserResponse>
+    suspend fun register(user: RegisterUser): Response<RegisterUserResponse>
 }
 
 interface DaoRepositoryInt {

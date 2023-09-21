@@ -3,8 +3,11 @@ package com.saddict.reinvent.network
 import com.saddict.reinvent.model.remote.Product
 import com.saddict.reinvent.model.remote.ProductPostRequest
 import com.saddict.reinvent.model.remote.ProductResult
+import com.saddict.reinvent.model.remote.RegisterUser
+import com.saddict.reinvent.model.remote.RegisterUserResponse
 import com.saddict.reinvent.model.remote.User
 import com.saddict.reinvent.model.remote.UserResponse
+import com.saddict.reinvent.utils.Constants.CREATE_USER_URL
 import com.saddict.reinvent.utils.Constants.LOGIN_URL
 import com.saddict.reinvent.utils.Constants.PRODUCTS_URL
 import com.saddict.reinvent.utils.Constants.SINGLE_PRODUCTS_URL
@@ -31,5 +34,9 @@ interface ReInventApiService {
     suspend fun postProducts(@Body body: ProductPostRequest): Response<ProductResult>
 
     @PUT(SINGLE_PRODUCTS_URL)
-    suspend fun updateProduct(@Path("id") id: Int, @Body body: ProductPostRequest): Response<ProductResult>
+    suspend fun updateProduct(@Path("id") id: Int, @Body body: ProductPostRequest)
+    : Response<ProductResult>
+
+    @POST(CREATE_USER_URL)
+    suspend fun register(@Body user: RegisterUser): Response<RegisterUserResponse>
 }

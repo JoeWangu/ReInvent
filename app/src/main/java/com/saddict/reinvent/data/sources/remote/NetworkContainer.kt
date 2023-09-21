@@ -5,6 +5,7 @@ import com.saddict.reinvent.data.manager.PreferenceDataStore
 import com.saddict.reinvent.data.sources.NetworkRepositoryInt
 import com.saddict.reinvent.network.ReInventApiService
 import com.saddict.reinvent.prop.Prop.Props.baseurl
+import com.saddict.reinvent.utils.Constants.CREATE_USER_URL
 import com.saddict.reinvent.utils.Constants.LOGIN_URL
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -25,7 +26,10 @@ class RequestInterceptor(context: Context) : Interceptor {
         val request = chain.request()
         val token = preferenceDataStore.getToken()
         println("Outgoing request to ${request.url}")
-        return if (!request.url.encodedPath.contains(LOGIN_URL)) {
+        return if (
+            !request.url.encodedPath.contains(LOGIN_URL)
+            && !request.url.encodedPath.contains(CREATE_USER_URL)
+            ) {
             val requestBuild = request.newBuilder()
                 .header("Authorization", "Token $token")
                 .header("Content-Type", "application/json")

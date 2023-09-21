@@ -4,6 +4,8 @@ import com.saddict.reinvent.data.sources.NetworkRepositoryInt
 import com.saddict.reinvent.model.remote.Product
 import com.saddict.reinvent.model.remote.ProductPostRequest
 import com.saddict.reinvent.model.remote.ProductResult
+import com.saddict.reinvent.model.remote.RegisterUser
+import com.saddict.reinvent.model.remote.RegisterUserResponse
 import com.saddict.reinvent.model.remote.User
 import com.saddict.reinvent.model.remote.UserResponse
 import com.saddict.reinvent.network.ReInventApiService
@@ -22,4 +24,7 @@ class NetworkRepository (private val reInventApiService: ReInventApiService)
     : Response<ProductResult> = reInventApiService.updateProduct(id = id, body = product)
     override suspend fun login(user: User): Response<UserResponse> =
         reInventApiService.login(user)
+
+    override suspend fun register(user: RegisterUser)
+    : Response<RegisterUserResponse> = reInventApiService.register(user)
 }

@@ -8,10 +8,11 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.saddict.reinvent.ReInventApplication
 import com.saddict.reinvent.ui.screens.home.HomeViewModel
-import com.saddict.reinvent.ui.screens.login.LoginViewModel
+import com.saddict.reinvent.ui.screens.registration.LoginViewModel
 import com.saddict.reinvent.ui.screens.productdetail.ProductDetailsViewModel
 import com.saddict.reinvent.ui.screens.productdetail.ProductEditViewModel
 import com.saddict.reinvent.ui.screens.productdetail.ProductEntryViewModel
+import com.saddict.reinvent.ui.screens.registration.RegisterViewModel
 
 object AppViewModelProvider {
     val Factory = viewModelFactory {
@@ -44,6 +45,11 @@ object AppViewModelProvider {
             LoginViewModel(
                 context = reInventApplication().applicationContext
 
+            )
+        }
+        initializer {
+            RegisterViewModel(
+                context = reInventApplication().applicationContext
             )
         }
     }

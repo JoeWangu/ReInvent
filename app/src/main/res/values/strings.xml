@@ -8,7 +8,9 @@
     <string name="p_image">product image</string>
     <string name="refreshDb">refresh</string>
     <string name="login">Login</string>
+    <string name="register">Register</string>
     <string name="username">Username</string>
+    <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="registerTxt">Don\'t have an account: </string>
     <string name="reg_here"> Register here</string>

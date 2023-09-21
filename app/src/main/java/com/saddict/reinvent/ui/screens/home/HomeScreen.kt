@@ -1,6 +1,5 @@
 package com.saddict.reinvent.ui.screens.home
 
-import android.app.Activity
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.RepeatMode
@@ -78,13 +77,13 @@ object HomeDestination : NavigationDestination {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
+    navigateToLogin: () -> Unit,
     navigateToItemEntry: () -> Unit,
     navigateToItemDetails: (Int) -> Unit,
     modifier: Modifier = Modifier,
     homeViewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-    val activity = LocalContext.current as? Activity
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val preferenceDataStore = PreferenceDataStore(context)
@@ -118,8 +117,8 @@ fun HomeScreen(
                 coroutineScope.launch {
                     preferenceDataStore.setToken("")
                     context.toastUtil("You have been logged out")
-                    delay(2_000L)
-                    activity?.finish()
+                    delay(1_000L)
+                    navigateToLogin()
                 }
             },
             onProductClick = navigateToItemDetails,
@@ -139,7 +138,7 @@ fun HomeBody(
     modifier: Modifier = Modifier
 ) {
     when (homeUiState) {
-        is HomeUiState.Loading -> LoadingScreen(modifier = modifier.fillMaxSize())
+        HomeUiState.Loading -> LoadingScreen(modifier = modifier.fillMaxSize())
         is HomeUiState.Success -> ProductsBody(
             products = homeUiState.products,
             onProductClick = onProductClick,
