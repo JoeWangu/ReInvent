@@ -31,5 +31,5 @@ interface ReInventApiService {
     suspend fun postProducts(@Body body: ProductPostRequest): Response<ProductResult>
 
     @PUT(SINGLE_PRODUCTS_URL)
-    suspend fun updateProduct(@Path("id") id: Int, @Body body: ProductPostRequest): Call<ProductResult>
+    suspend fun updateProduct(@Path("id") id: Int, @Body body: ProductPostRequest): Response<ProductResult>
 }

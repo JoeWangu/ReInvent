@@ -18,8 +18,8 @@ class NetworkRepository (private val reInventApiService: ReInventApiService)
         reInventApiService.postProducts(products)
     override suspend fun getSingleProduct(id: Int): Call<ProductResult> =
         reInventApiService.getSingleProduct(id = id)
-    override suspend fun updateProduct(id: Int, product: ProductPostRequest) =
-        reInventApiService.updateProduct(id = id, body = product)
+    override suspend fun updateProduct(id: Int, product: ProductPostRequest)
+    : Response<ProductResult> = reInventApiService.updateProduct(id = id, body = product)
     override suspend fun login(user: User): Response<UserResponse> =
         reInventApiService.login(user)
 }

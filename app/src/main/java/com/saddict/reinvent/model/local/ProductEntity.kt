@@ -15,7 +15,7 @@ data class ProductEntity(
     @ColumnInfo(name = "model_number")
     val modelNumber: String,
     val specifications: String,
-    val price: String,
+    val price: Double,
     val image: Int,
     @ColumnInfo(name = "image_url")
     val imageUrl: String,

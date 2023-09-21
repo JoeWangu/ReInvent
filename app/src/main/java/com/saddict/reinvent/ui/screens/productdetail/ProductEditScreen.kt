@@ -6,12 +6,16 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.saddict.reinvent.R
+import com.saddict.reinvent.data.manager.AppUiState
 import com.saddict.reinvent.ui.TopBar
 import com.saddict.reinvent.ui.navigation.NavigationDestination
 import com.saddict.reinvent.ui.screens.AppViewModelProvider
+import com.saddict.reinvent.utils.toastUtil
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 object ProductEditDestination : NavigationDestination {
@@ -31,6 +35,7 @@ fun ProductEditScreen(
     viewModel: ProductEditViewModel = viewModel(factory = AppViewModelProvider.Factory),
 ) {
     val coroutineScope = rememberCoroutineScope()
+    val ctx = LocalContext.current
     Scaffold(
         topBar = {
             TopBar(
@@ -47,7 +52,20 @@ fun ProductEditScreen(
             onSaveClick = {
                 coroutineScope.launch {
                     viewModel.updateProduct()
-                    navigateBack()
+                    viewModel.uiState.collect{ state ->
+                        when(state){
+                            AppUiState.Error -> {
+                                ctx.toastUtil("Could not save")
+                                navigateBack()
+                            }
+                            AppUiState.Loading -> ctx.toastUtil("Saving Product")
+                            is AppUiState.Success -> {
+                                ctx.toastUtil("Updated Successfully")
+                                delay(2_000L)
+                                navigateBack()
+                            }
+                        }
+                    }
                 }
             },
             modifier = Modifier.padding(innerPadding)

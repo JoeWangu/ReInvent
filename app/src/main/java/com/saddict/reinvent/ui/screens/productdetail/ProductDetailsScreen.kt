@@ -114,7 +114,7 @@ fun ProductDetailItems(
             )
             ProductDetailsRow(
                 labelResID = R.string.price,
-                productDetail = productEntity.price
+                productDetail = productEntity.price.toString()
             )
             ProductDetailsRow(
                 labelResID = R.string.image,

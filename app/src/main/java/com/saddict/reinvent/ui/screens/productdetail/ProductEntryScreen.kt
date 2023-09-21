@@ -17,14 +17,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.saddict.reinvent.R
+import com.saddict.reinvent.data.manager.AppUiState
 import com.saddict.reinvent.ui.TopBar
 import com.saddict.reinvent.ui.navigation.NavigationDestination
 import com.saddict.reinvent.ui.screens.AppViewModelProvider
+import com.saddict.reinvent.utils.toastUtil
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.Currency
 import java.util.Locale
@@ -43,7 +49,7 @@ fun ProductEntryScreen(
     viewModel: ProductEntryViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val coroutineScope = rememberCoroutineScope()
-//    val ctx = LocalContext.current
+    val ctx = LocalContext.current
     Scaffold(
         topBar = {
             TopBar(
@@ -63,7 +69,20 @@ fun ProductEntryScreen(
                 // be cancelled - since the scope is bound to composition.
                 coroutineScope.launch {
                     viewModel.saveProduct()
-                    navigateBack()
+                    viewModel.uiState.collect { state ->
+                        when(state){
+                            AppUiState.Error -> {
+                                ctx.toastUtil("Could not save")
+                                navigateBack()
+                            }
+                            AppUiState.Loading -> ctx.toastUtil("Saving Product")
+                            is AppUiState.Success -> {
+                                ctx.toastUtil("Saved Successfully")
+                                delay(2_000L)
+                                navigateBack()
+                            }
+                        }
+                    }
                 }
             },
             modifier = Modifier
@@ -121,6 +140,11 @@ fun ProductInputForm(
                 unfocusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
                 disabledContainerColor = MaterialTheme.colorScheme.secondaryContainer,
             ),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Next,
+                capitalization = KeyboardCapitalization.Sentences
+            ),
             modifier = Modifier.fillMaxWidth(),
             enabled = enabled,
             singleLine = true
@@ -128,7 +152,10 @@ fun ProductInputForm(
         OutlinedTextField(
             value = entryDetails.modelNumber,
             onValueChange = { onValueChange(entryDetails.copy(modelNumber = it)) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Next,
+            ),
             label = { Text(stringResource(R.string.product_model_no_req)) },
             colors = OutlinedTextFieldDefaults.colors(
                 focusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
@@ -143,7 +170,11 @@ fun ProductInputForm(
         OutlinedTextField(
             value = entryDetails.specifications,
             onValueChange = { onValueChange(entryDetails.copy(specifications = it)) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Next,
+                capitalization = KeyboardCapitalization.Sentences
+            ),
             label = { Text(stringResource(R.string.product_specifications_req)) },
             colors = OutlinedTextFieldDefaults.colors(
                 focusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
@@ -157,8 +188,62 @@ fun ProductInputForm(
         OutlinedTextField(
             value = entryDetails.price,
             onValueChange = { onValueChange(entryDetails.copy(price = it)) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Decimal,
+                imeAction = ImeAction.Next,
+            ),
             label = { Text(stringResource(R.string.product_price_req)) },
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                unfocusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                disabledContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+            ),
+            modifier = Modifier.fillMaxWidth(),
+            enabled = enabled,
+            singleLine = true
+        )
+        OutlinedTextField(
+            value = entryDetails.image,
+            onValueChange = { onValueChange(entryDetails.copy(image = it)) },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Next,
+            ),
+            label = { Text(stringResource(R.string.product_image_req)) },
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                unfocusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                disabledContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+            ),
+            modifier = Modifier.fillMaxWidth(),
+            enabled = enabled,
+            singleLine = true
+        )
+        OutlinedTextField(
+            value = entryDetails.category,
+            onValueChange = { onValueChange(entryDetails.copy(category = it)) },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Next,
+            ),
+            label = { Text(stringResource(R.string.product_category_req)) },
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                unfocusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                disabledContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+            ),
+            modifier = Modifier.fillMaxWidth(),
+            enabled = enabled,
+            singleLine = true
+        )
+        OutlinedTextField(
+            value = entryDetails.supplier,
+            onValueChange = { onValueChange(entryDetails.copy(supplier = it)) },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Done,
+            ),
+            label = { Text(stringResource(R.string.product_supplier_req)) },
             colors = OutlinedTextFieldDefaults.colors(
                 focusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
                 unfocusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,

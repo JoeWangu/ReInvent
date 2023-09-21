@@ -9,6 +9,7 @@ import com.saddict.reinvent.utils.Constants.LOGIN_URL
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
 
@@ -24,7 +25,6 @@ class RequestInterceptor(context: Context) : Interceptor {
         val request = chain.request()
         val token = preferenceDataStore.getToken()
         println("Outgoing request to ${request.url}")
-        println("Token is $token")
         return if (!request.url.encodedPath.contains(LOGIN_URL)) {
             val requestBuild = request.newBuilder()
                 .header("Authorization", "Token $token")
@@ -39,9 +39,12 @@ class RequestInterceptor(context: Context) : Interceptor {
 }
 
 class NetworkContainer(context: Context) :NetworkContainerInt{
+    private val bodyInterceptor =
+        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC)
     private val okHttpClient = OkHttpClient()
         .newBuilder()
         .addInterceptor(RequestInterceptor(context))
+        .addInterceptor(bodyInterceptor)
         .build()
     private val retrofit = Retrofit.Builder()
         .addConverterFactory(JacksonConverterFactory.create())

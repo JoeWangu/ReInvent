@@ -27,7 +27,7 @@ data class ProductResult(
     @JsonProperty("specifications")
     val specifications: String,
     @JsonProperty("price")
-    val price: String,
+    val price: Double,
     @JsonProperty("image")
     val image: Int,
     @JsonProperty("image_detail")
@@ -48,10 +48,11 @@ data class ImageDetail(
 
 @Keep
 data class ProductPostRequest(
-    val productName: String,
-    val modelNumber: String,
+    val name: String,
+    @Suppress("PropertyName")
+    val model_number: String,
     val specifications: String,
-    val price: Int,
+    val price: Double,
     val image: Int,
     val category: Int,
     val supplier: Int,

@@ -307,7 +307,7 @@ fun ExtraProductInfo(product: ProductEntity, modifier: Modifier = Modifier) {
                 style = MaterialTheme.typography.bodyLarge
             )
             Text(
-                text = it.price,
+                text = it.price.toString(),
                 style = MaterialTheme.typography.bodyLarge
             )
         }

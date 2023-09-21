@@ -12,9 +12,9 @@ import retrofit2.Response
 
 interface NetworkRepositoryInt {
     suspend fun getProducts(): Product
-    suspend fun postProducts(products: ProductPostRequest): Response<ProductResult>
     suspend fun getSingleProduct(id: Int): Call<ProductResult>
-    suspend fun updateProduct(id: Int, product: ProductPostRequest): Call<ProductResult>
+    suspend fun postProducts(products: ProductPostRequest): Response<ProductResult>
+    suspend fun updateProduct(id: Int, product: ProductPostRequest): Response<ProductResult>
     suspend fun login(user: User): Response<UserResponse>
 }
 
