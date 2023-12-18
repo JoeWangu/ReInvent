@@ -1,21 +1,35 @@
 package com.saddict.reinvent.utils
 
-import com.saddict.reinvent.model.local.ProductEntity
-import com.saddict.reinvent.model.remote.ProductResult
+import com.saddict.reinvent.products.model.local.ProductEntity
+import com.saddict.reinvent.products.model.remote.ProductImageDetails
+import com.saddict.reinvent.products.model.remote.ProductResults
 
 class DataMapper {
     companion object{
-        fun mapToEntity(productsResult: ProductResult): ProductEntity {
+        fun ProductResults.mapToEntity(): ProductEntity {
             return ProductEntity(
-                id = productsResult.id,
-                productName = productsResult.name,
-                modelNumber = productsResult.modelNumber,
-                specifications = productsResult.specifications,
-                price = productsResult.price,
-                image = productsResult.image,
-                imageUrl = productsResult.imageDetail.image,
-                category = productsResult.category,
-                supplier = productsResult.supplier
+                id = id,
+                productName = productName,
+                modelNumber = modelNumber,
+                specifications = modelNumber,
+                price = price,
+                image = image,
+                imageDetails = imageDetails.image,
+                category = category,
+                supplier = supplier
+            )
+        }
+        fun ProductEntity.mapToResults(): ProductResults{
+            return ProductResults(
+                id = id,
+                productName = productName,
+                modelNumber = modelNumber,
+                specifications = modelNumber,
+                price = price,
+                image = image,
+                imageDetails = ProductImageDetails(image, imageDetails),
+                category = category,
+                supplier = supplier
             )
         }
     }

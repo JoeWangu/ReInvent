@@ -1,13 +1,7 @@
 package com.saddict.reinvent
 
 import android.app.Application
-import com.saddict.reinvent.data.manager.ReInventContainer
-import com.saddict.reinvent.data.manager.ReInventRepository
+import dagger.hilt.android.HiltAndroidApp
 
-class ReInventApplication: Application() {
-    lateinit var container: ReInventContainer
-    override fun onCreate() {
-        super.onCreate()
-        container = ReInventRepository(this)
-    }
-}
+@HiltAndroidApp
+class ReInventApplication: Application()

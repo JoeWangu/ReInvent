@@ -7,4 +7,5 @@ object Constants {
 //    const val LOGOUT_URL = "logout-api/"
     const val PRODUCTS_URL = "inventory/api/products/"
     const val SINGLE_PRODUCTS_URL = "inventory/api/products/{id}/"
+    const val INITIAL_PAGE = 1
 }
