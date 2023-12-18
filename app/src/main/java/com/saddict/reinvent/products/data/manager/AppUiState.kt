@@ -1,4 +1,4 @@
-package com.saddict.reinvent.data.manager
+package com.saddict.reinvent.products.data.manager
 
 sealed interface AppUiState{
     data object Success: AppUiState

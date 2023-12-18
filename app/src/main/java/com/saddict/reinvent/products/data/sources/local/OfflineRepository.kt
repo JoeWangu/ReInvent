@@ -1,8 +1,8 @@
-package com.saddict.reinvent.data.sources.local
+package com.saddict.reinvent.products.data.sources.local
 
-import com.saddict.reinvent.data.manager.ReInventDao
-import com.saddict.reinvent.data.sources.DaoRepositoryInt
-import com.saddict.reinvent.model.local.ProductEntity
+import com.saddict.reinvent.products.data.manager.ReInventDao
+import com.saddict.reinvent.products.data.sources.DaoRepositoryInt
+import com.saddict.reinvent.products.model.local.ProductEntity
 import kotlinx.coroutines.flow.Flow
 
 class OfflineRepository(private val reInventDao: ReInventDao)

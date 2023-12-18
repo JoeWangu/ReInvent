@@ -1,4 +1,4 @@
-package com.saddict.reinvent.model.local
+package com.saddict.reinvent.products.model.local
 
 import androidx.annotation.Keep
 import androidx.room.ColumnInfo

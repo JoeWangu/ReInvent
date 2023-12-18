@@ -1,8 +1,8 @@
 package com.saddict.reinvent
 
 import android.app.Application
-import com.saddict.reinvent.data.manager.ReInventContainer
-import com.saddict.reinvent.data.manager.ReInventRepository
+import com.saddict.reinvent.products.data.manager.ReInventContainer
+import com.saddict.reinvent.products.data.manager.ReInventRepository
 
 class ReInventApplication: Application() {
     lateinit var container: ReInventContainer

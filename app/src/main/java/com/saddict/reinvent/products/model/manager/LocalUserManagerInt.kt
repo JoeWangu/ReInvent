@@ -1,4 +1,4 @@
-package com.saddict.reinvent.model.manager
+package com.saddict.reinvent.products.model.manager
 
 import kotlinx.coroutines.flow.Flow
 

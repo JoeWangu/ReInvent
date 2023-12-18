@@ -12,7 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.saddict.reinvent.data.manager.PreferenceDataStore
+import com.saddict.reinvent.products.data.manager.PreferenceDataStore
 import com.saddict.reinvent.ui.screens.extra.LoadingDestination
 import com.saddict.reinvent.ui.screens.extra.ScreenLoading
 import com.saddict.reinvent.ui.screens.home.HomeDestination

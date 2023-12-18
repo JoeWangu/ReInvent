@@ -1,4 +1,4 @@
-package com.saddict.reinvent.data.manager
+package com.saddict.reinvent.products.data.manager
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -7,7 +7,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.saddict.reinvent.model.manager.LocalUserManagerInt
+import com.saddict.reinvent.products.model.manager.LocalUserManagerInt
 import com.saddict.reinvent.utils.Constants
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch

@@ -7,9 +7,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.saddict.reinvent.data.manager.AppUiState
-import com.saddict.reinvent.data.sources.remote.NetworkContainer
-import com.saddict.reinvent.model.remote.ProductPostRequest
+import com.saddict.reinvent.products.data.manager.AppUiState
+import com.saddict.reinvent.products.data.sources.remote.NetworkContainer
+import com.saddict.reinvent.products.model.remote.ProductPostRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow

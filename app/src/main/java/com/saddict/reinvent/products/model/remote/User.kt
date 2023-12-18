@@ -1,4 +1,4 @@
-package com.saddict.reinvent.model.remote
+package com.saddict.reinvent.products.model.remote
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import androidx.annotation.Keep

@@ -1,12 +1,12 @@
-package com.saddict.reinvent.network
+package com.saddict.reinvent.products.network
 
-import com.saddict.reinvent.model.remote.Product
-import com.saddict.reinvent.model.remote.ProductPostRequest
-import com.saddict.reinvent.model.remote.ProductResult
-import com.saddict.reinvent.model.remote.RegisterUser
-import com.saddict.reinvent.model.remote.RegisterUserResponse
-import com.saddict.reinvent.model.remote.User
-import com.saddict.reinvent.model.remote.UserResponse
+import com.saddict.reinvent.products.model.remote.Product
+import com.saddict.reinvent.products.model.remote.ProductPostRequest
+import com.saddict.reinvent.products.model.remote.ProductResult
+import com.saddict.reinvent.products.model.remote.RegisterUser
+import com.saddict.reinvent.products.model.remote.RegisterUserResponse
+import com.saddict.reinvent.products.model.remote.User
+import com.saddict.reinvent.products.model.remote.UserResponse
 import com.saddict.reinvent.utils.Constants.CREATE_USER_URL
 import com.saddict.reinvent.utils.Constants.LOGIN_URL
 import com.saddict.reinvent.utils.Constants.PRODUCTS_URL

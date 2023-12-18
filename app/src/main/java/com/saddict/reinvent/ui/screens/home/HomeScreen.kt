@@ -60,8 +60,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.saddict.reinvent.R
-import com.saddict.reinvent.data.manager.PreferenceDataStore
-import com.saddict.reinvent.model.local.ProductEntity
+import com.saddict.reinvent.products.data.manager.PreferenceDataStore
+import com.saddict.reinvent.products.model.local.ProductEntity
 import com.saddict.reinvent.ui.TopBar
 import com.saddict.reinvent.ui.navigation.NavigationDestination
 import com.saddict.reinvent.ui.screens.AppViewModelProvider

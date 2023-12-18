@@ -1,9 +1,9 @@
-package com.saddict.reinvent.data.sources.remote
+package com.saddict.reinvent.products.data.sources.remote
 
 import android.content.Context
-import com.saddict.reinvent.data.manager.PreferenceDataStore
-import com.saddict.reinvent.data.sources.NetworkRepositoryInt
-import com.saddict.reinvent.network.ReInventApiService
+import com.saddict.reinvent.products.data.manager.PreferenceDataStore
+import com.saddict.reinvent.products.data.sources.NetworkRepositoryInt
+import com.saddict.reinvent.products.network.ReInventApiService
 import com.saddict.reinvent.prop.Prop.Props.baseurl
 import com.saddict.reinvent.utils.Constants.CREATE_USER_URL
 import com.saddict.reinvent.utils.Constants.LOGIN_URL
@@ -42,7 +42,7 @@ class RequestInterceptor(context: Context) : Interceptor {
     }
 }
 
-class NetworkContainer(context: Context) :NetworkContainerInt{
+class NetworkContainer(context: Context) : NetworkContainerInt {
     private val bodyInterceptor =
         HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC)
     private val okHttpClient = OkHttpClient()

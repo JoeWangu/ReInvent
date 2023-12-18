@@ -1,13 +1,13 @@
-package com.saddict.reinvent.data.sources
+package com.saddict.reinvent.products.data.sources
 
-import com.saddict.reinvent.model.local.ProductEntity
-import com.saddict.reinvent.model.remote.Product
-import com.saddict.reinvent.model.remote.ProductPostRequest
-import com.saddict.reinvent.model.remote.ProductResult
-import com.saddict.reinvent.model.remote.RegisterUser
-import com.saddict.reinvent.model.remote.RegisterUserResponse
-import com.saddict.reinvent.model.remote.User
-import com.saddict.reinvent.model.remote.UserResponse
+import com.saddict.reinvent.products.model.local.ProductEntity
+import com.saddict.reinvent.products.model.remote.Product
+import com.saddict.reinvent.products.model.remote.ProductPostRequest
+import com.saddict.reinvent.products.model.remote.ProductResult
+import com.saddict.reinvent.products.model.remote.RegisterUser
+import com.saddict.reinvent.products.model.remote.RegisterUserResponse
+import com.saddict.reinvent.products.model.remote.User
+import com.saddict.reinvent.products.model.remote.UserResponse
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Call
 import retrofit2.Response

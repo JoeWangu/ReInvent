@@ -1,7 +1,7 @@
 package com.saddict.reinvent.utils
 
-import com.saddict.reinvent.model.local.ProductEntity
-import com.saddict.reinvent.model.remote.ProductResult
+import com.saddict.reinvent.products.model.local.ProductEntity
+import com.saddict.reinvent.products.model.remote.ProductResult
 
 class DataMapper {
     companion object{

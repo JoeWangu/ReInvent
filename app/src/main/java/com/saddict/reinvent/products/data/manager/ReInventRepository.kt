@@ -1,13 +1,13 @@
-package com.saddict.reinvent.data.manager
+package com.saddict.reinvent.products.data.manager
 
 import android.content.Context
 import android.util.Log
-import com.saddict.reinvent.data.sources.DaoRepositoryInt
-import com.saddict.reinvent.data.sources.NetworkRepositoryInt
-import com.saddict.reinvent.data.sources.local.OfflineRepository
-import com.saddict.reinvent.data.sources.local.ReInventDatabase
-import com.saddict.reinvent.data.sources.remote.NetworkContainer
-import com.saddict.reinvent.model.local.ProductEntity
+import com.saddict.reinvent.products.data.sources.DaoRepositoryInt
+import com.saddict.reinvent.products.data.sources.NetworkRepositoryInt
+import com.saddict.reinvent.products.data.sources.local.OfflineRepository
+import com.saddict.reinvent.products.data.sources.local.ReInventDatabase
+import com.saddict.reinvent.products.data.sources.remote.NetworkContainer
+import com.saddict.reinvent.products.model.local.ProductEntity
 import com.saddict.reinvent.utils.DataMapper.Companion.mapToEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first

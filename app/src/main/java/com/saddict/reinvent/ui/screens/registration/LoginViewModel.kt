@@ -4,9 +4,9 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.saddict.reinvent.data.manager.PreferenceDataStore
-import com.saddict.reinvent.data.sources.remote.NetworkContainer
-import com.saddict.reinvent.model.remote.User
+import com.saddict.reinvent.products.data.manager.PreferenceDataStore
+import com.saddict.reinvent.products.data.sources.remote.NetworkContainer
+import com.saddict.reinvent.products.model.remote.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow

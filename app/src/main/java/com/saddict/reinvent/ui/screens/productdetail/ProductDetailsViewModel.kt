@@ -3,8 +3,8 @@ package com.saddict.reinvent.ui.screens.productdetail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.saddict.reinvent.data.sources.DaoRepositoryInt
-import com.saddict.reinvent.model.local.ProductEntity
+import com.saddict.reinvent.products.data.sources.DaoRepositoryInt
+import com.saddict.reinvent.products.model.local.ProductEntity
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull

@@ -1,10 +1,10 @@
-package com.saddict.reinvent.data.manager
+package com.saddict.reinvent.products.data.manager
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.saddict.reinvent.model.local.ProductEntity
+import com.saddict.reinvent.products.model.local.ProductEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
